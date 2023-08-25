@@ -1,0 +1,11 @@
+****Dependcies for frontend ui
+
+axios
+chart.js 
+react-chartjs-2 
+protected-route-react 
+react-router-dom 
+react-hot-toast
+react-icons 
+react-redux 
+@reduxjs/toolkit 
