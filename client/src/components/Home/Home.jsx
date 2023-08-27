@@ -41,7 +41,7 @@ function Home(){
                    boxSize={"md"} 
                    src={vg} 
                    objectFit='contain' 
-                  //  width={"27rem"}
+                 
                   />
             </Stack>
       </div>
