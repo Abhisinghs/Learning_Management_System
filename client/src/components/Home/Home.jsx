@@ -2,7 +2,7 @@ import React from "react";
 import {Box, Button, HStack, Heading, Image, Stack, Text, VStack} from '@chakra-ui/react'
 import './Home.css'
 import { Link } from "react-router-dom";
-import vg from '../../assets/images/bg.png'
+import vg from '../../assets/images/bg2.png'
 import {CgGoogle,CgYoutube } from "react-icons/cg";
 import {SiCoursera,SiUdemy} from 'react-icons/si'
 import{DiAws} from 'react-icons/di'
@@ -20,11 +20,18 @@ function Home(){
                spacing={['16','56']}
 
             >
-                <VStack width={"full"} alignItems={["center","flex-end"]}>
-                    <Heading children="LEARN FROM THE EXPERTS" size={'2x1'}/>
-                    <Text children="Find Valuable Content at Reasonable Price"/>
+                <VStack width={"full"}  spacing="4" alignItems={["center","flex-end"]}>
+                    <Heading 
+                      fontSize="3xl" 
+                      children="LEARN FROM THE EXPERTS" 
+                     />
+                    <Text
+                      paddingBottom={"2px"}
+                      fontFamily="cursive"
+                      textAlign={['center',"left"]} 
+                      children="Find Valuable Content at Reasonable Price"/>
                     <Link to='/courses'>
-                        <Button size={'lg'} colorScheme="yellow">
+                        <Button size={'md'} colorScheme="blue">
                             Explore Now
                         </Button>
                     </Link>
@@ -34,15 +41,16 @@ function Home(){
                    boxSize={"md"} 
                    src={vg} 
                    objectFit='contain' 
+                  //  width={"27rem"}
                   />
             </Stack>
       </div>
 
-         <Box padding={'8'} bg="blackAlpha.800">
+         <Box padding={'4'} bg="blackAlpha.800">
             <Heading
                textAlign={'center'}
                fontFamily="body"
-               color={'yellow.400'}
+               color={'blue.400'}
                children="OUR BRANDS"
             />
             <HStack className="brandsBanner" justifyContent={"space-evenly"} marginTop="4">
@@ -55,7 +63,7 @@ function Home(){
          </Box>
 
          <div className="container2">
-            <video autoPlay
+            <video
             controls 
             controlsList="nodownload nofullscreen noremoteplayback" 
             disablePictureInPicture
