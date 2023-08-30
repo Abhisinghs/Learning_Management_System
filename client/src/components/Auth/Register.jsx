@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Container, FormLabel, Heading, Input, VStack, background, border, color } from '@chakra-ui/react'
+import { Avatar, Box, Button, Container, FormLabel, Heading, Input, VStack } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -26,7 +26,7 @@ const Register = () => {
 
     const changeImageHandler = e =>{
         const file= e.target.files[0];
-        const reader=new FileReader();
+        const reader=new FileReader(image);
 
         reader.readAsDataURL(file);
 

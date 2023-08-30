@@ -25,15 +25,15 @@ const Footer = () => {
           fontSize="50"
         >
 
-          <a href='http://google.com' target={'_blank'}>
+          <a href='http://google.com' target={'blank'}>
             <TiSocialYoutubeCircular/> 
           </a>
 
-          <a href='https://www.instagram.com/abhishek_singh_shekhawat1179/' target={'_blank'}>
+          <a href='https://www.instagram.com/abhishek_singh_shekhawat1179/' target={'blank'}>
             <TiSocialInstagramCircular/> 
           </a>
 
-          <a href='https://github.com/Abhisinghs' target={'_blank'}>
+          <a href='https://github.com/Abhisinghs' target={'blank'}>
             <DiGithub/> 
           </a>
         </HStack>
