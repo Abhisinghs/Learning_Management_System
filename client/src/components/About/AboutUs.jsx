@@ -67,7 +67,7 @@ const AboutUs = () => {
 
          <Link to={'/subscribe'}>
             <Button variant={'ghost'} colorScheme='blue'>
-                Checkout Our Plan
+                Checkout Our Best Plain
             </Button>
          </Link>
        </Stack>
