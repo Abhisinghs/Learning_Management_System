@@ -62,7 +62,7 @@ const AboutUs = () => {
 
          <Text fontFamily={'cursive'} m={'8'} textAlign={['center','left']}>
             We are a Video streaming platform with some premium courses abavilable
-            only for premium users.
+            only for premium users and you can also likes video.
          </Text>
 
          <Link to={'/subscribe'}>
