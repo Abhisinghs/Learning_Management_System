@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Container, HStack, Heading, Stack, Text, VStack } from '@chakra-ui/react'
+import { Avatar, Box, Button, Center, Container, HStack, Heading, Stack, Text, VStack } from '@chakra-ui/react'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import introVideo from '../../assets/videos/intro.mp4'
@@ -44,6 +44,32 @@ const VideoPlayer = ()=>(
     </Box>
 )
 
+const TandC =()=>(
+  <Box>
+    <Heading 
+      size={'md'} 
+      children="Terms & Condition" 
+      textAlign={['center','left']}
+      my='4'
+    />
+
+    <Box h='sm' p='4'>
+      <Text 
+        fontFamily={'heading'}
+        textAlign={['center','left']} 
+        letterSpacing={'widest'}
+      >
+        {termsAndCondition}
+      </Text>
+
+      <Heading 
+        my='4' 
+        size={'xs'} 
+        children="Refund only applicable for cancellation within 7 days."
+      />
+    </Box>
+  </Box>
+)
 const AboutUs = () => {
   return (
     <Container 
@@ -74,6 +100,7 @@ const AboutUs = () => {
 
        <VideoPlayer/>
 
+        <TandC termsAndCondition={"termsAndCondition"}/>
        <HStack my={'4'} p={'4'}>
           <RiSecurePaymentFill/>
           <Heading 
