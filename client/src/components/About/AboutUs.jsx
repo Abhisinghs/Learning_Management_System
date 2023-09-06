@@ -1,8 +1,9 @@
-import { Avatar, Box, Button, Center, Container, HStack, Heading, Stack, Text, VStack } from '@chakra-ui/react'
+import { Avatar, Box, Button, Container, HStack, Heading, Stack, Text, VStack } from '@chakra-ui/react'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import introVideo from '../../assets/videos/intro.mp4'
 import { RiSecurePaymentFill } from 'react-icons/ri'
+import termsAndCondition from '../../assets/docs/termsAndCondition'
 
 const  Founder = ()=>(
     <Stack
@@ -53,7 +54,7 @@ const TandC =()=>(
       my='4'
     />
 
-    <Box h='sm' p='4'>
+    <Box h='sm' p='4' overflowY={'scroll'}>
       <Text 
         fontFamily={'heading'}
         textAlign={['center','left']} 
@@ -100,7 +101,7 @@ const AboutUs = () => {
 
        <VideoPlayer/>
 
-        <TandC termsAndCondition={"termsAndCondition"}/>
+        <TandC termsAndCondition={termsAndCondition}/>
        <HStack my={'4'} p={'4'}>
           <RiSecurePaymentFill/>
           <Heading 
