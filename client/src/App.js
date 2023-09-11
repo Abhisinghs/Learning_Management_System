@@ -17,6 +17,8 @@ import PaymentSuccess from './components/Payments/PaymentSuccess';
 import PaymentFail from './components/Payments/PaymentFail';
 import CoursePage from './components/CoursePage/CoursePage';
 import Profile from './components/Profile/Profile';
+import UpdateProfile from './components/Profile/UpdateProfile';
+import ChangePassword from './components/Profile/ChangePassword';
 
 
 function App() {
@@ -30,6 +32,8 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />}/>
         <Route path='/profile' element={<Profile />}/>
+        <Route path='/updateprofile' element={<UpdateProfile />}/>
+        <Route path='/changepassword' element={<ChangePassword />}/>
         <Route path='/courses' element={<Courses />}/>
         <Route path='/course/:id' element={<CoursePage />}/>
         <Route path='/contact' element={<ContactUs />}/>
