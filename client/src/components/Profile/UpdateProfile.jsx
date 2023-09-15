@@ -3,14 +3,14 @@ import React, { useState } from 'react'
 
 const UpdateProfile = () => {
 
-  const [oldPassword,setOldPassword] = useState("");
-  const [newPassword,setNewPassword] = useState("");
+  const [name,setName] = useState("");
+  const [email,setEmail] = useState("");
   return <Container py='16' minH={'90vh'}>
     <form>
       <Heading
         textTransform={'uppercase'}
         children="Update Profile"
-        my="16"
+        my="10"
         textAlign={['center','left']}
       />
 
@@ -22,6 +22,7 @@ const UpdateProfile = () => {
           placeholder='Name '
           type={'text'}
           focusBorderColor='blue.500'
+          my={'5'}
         />
         
         <Input 
@@ -31,9 +32,10 @@ const UpdateProfile = () => {
           placeholder='Email'
           type={'email'}
           focusBorderColor='blue.500'
+          mb={'5'}
         />
 
-        <Button w='full' colorScheme={'blue'} type='submit'>Change</Button>
+        <Button w='full' colorScheme={'blue'} type='submit'>Update</Button>
       </VStack>
     </form>
   </Container>

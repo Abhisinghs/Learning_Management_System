@@ -10,7 +10,7 @@ const ChangePassword = () => {
       <Heading
         textTransform={'uppercase'}
         children="Change Password"
-        my="16"
+        my="10"
         textAlign={['center','left']}
       />
 
@@ -22,6 +22,7 @@ const ChangePassword = () => {
           placeholder='Old Password '
           type={'password'}
           focusBorderColor='blue.500'
+          my={'5'}
         />
         
         <Input 
@@ -31,6 +32,8 @@ const ChangePassword = () => {
           placeholder='New Password '
           type={'password'}
           focusBorderColor='blue.500'
+           
+          mb={'5'}
         />
 
         <Button w='full' colorScheme={'blue'} type='submit'>Change</Button>
