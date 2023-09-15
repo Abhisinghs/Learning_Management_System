@@ -19,6 +19,7 @@ import CoursePage from './components/CoursePage/CoursePage';
 import Profile from './components/Profile/Profile';
 import UpdateProfile from './components/Profile/UpdateProfile';
 import ChangePassword from './components/Profile/ChangePassword';
+import Dashboard from './components/Admin/Dashboard/Dashboard';
 
 
 function App() {
@@ -47,6 +48,9 @@ function App() {
         <Route path='*' element={<NotFound />}/>
         <Route path='/paymentsuccess' element={<PaymentSuccess/>}/>
         <Route path='/paymentfail' element={<PaymentFail/>}/>
+
+        {/* Admin Routes */}
+        <Route path='/admin/dashboard' element={<Dashboard/>}/>
       </Routes>
 
       <Footer/>
