@@ -1,8 +1,7 @@
-import { Container, Grid, Heading, Input, Select, VStack } from '@chakra-ui/react'
+import { Button, Container, Grid, Heading, Image, Input, Select, VStack } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import cursor from '../../../assets/images/cursor.png'
 import Sidebar from '../Sidebar'
-import { CategoryScale } from 'chart.js'
 
 const CreateCourse = () => {
 
@@ -22,6 +21,26 @@ const CreateCourse = () => {
     "Game Development"
   ];
 
+  const fileUploadCss={
+    cursor:'pointer', 
+    marginLeft:'-5%',
+    width:'110%',
+    border:'none',
+    height:'100%',
+    color:'#10a6e1' ,
+    backgroundColor:'white'
+  }
+  const changeImageHandler = e =>{
+    const file= e.target.files[0];
+    const reader=new FileReader(image);
+
+    reader.readAsDataURL(file);
+
+    reader.onloadend=()=>{
+        setImagePrev(reader.result)
+        setImage(file)
+    }
+  }
   return <Grid
     css={{
         cursor:`url(${cursor}),default`,
@@ -78,13 +97,21 @@ const CreateCourse = () => {
       <Input 
         accept='image/*'
         required 
-        id='chooseAvatar' 
         type={'file'}
-        focusBorderColor='purple.500'
-        css={fileUploadStyle}
+        focusBorderColor='purple.300'
+        css={{
+          '&::file-selector-button':{...fileUploadCss,color:'purple'}
+        }}
         onChange={changeImageHandler}
       />
 
+        {imagePrev && (
+          <Image src={imagePrev} boxSize="64" objectFit={'contain'} />
+        )}
+
+        <Button w="full" colorScheme={'purple'} type='submit' >
+          Create
+        </Button>
       </VStack>
      </form>
    </Container>
