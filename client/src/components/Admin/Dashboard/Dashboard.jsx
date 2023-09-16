@@ -1,8 +1,9 @@
-import { Box, Grid, HStack, Heading, Stack, Text } from '@chakra-ui/react'
+import { Box, Grid, HStack, Heading, Progress, Stack, Text } from '@chakra-ui/react'
 import React from 'react'
 import cursor from '../../../assets/images/cursor.png'
 import Sidebar from '../Sidebar'
 import { RiArrowDownLine, RiArrowUpLine } from 'react-icons/ri'
+import { DoughnutChart, LineChart } from './Chart'
 
 
 const Databox =({title,qty,qtyPercentage,profit})=>(
@@ -29,6 +30,25 @@ const Databox =({title,qty,qtyPercentage,profit})=>(
       </HStack>
        <Text  opacity={0.6} children="Since Last Month"/>
     </Box>
+);
+
+const Bar = ({title,value,profit})=>(
+  <Box
+    py="4"
+    px={['0','20']}
+  >
+    <Heading size='sm' children={title} mb="2" />
+
+    <HStack w="full" alignItems={'center'} >
+
+     <Text children={profit?"0%":`-${value}%`}/>
+
+     <Progress w="full" value={profit?value:0} color={'purple'} />
+
+     <Text children={`${value>100 ? value:100}%`} />
+
+    </HStack>
+  </Box>
 )
 const Dashboard = () => {
   return <Grid
@@ -67,10 +87,44 @@ const Dashboard = () => {
         borderRadius="lg"
         p={['0','16']}
         mt={['4','16']}
-        boxShadow={'-2px 0 10px rgba(107,70,193,0.5'}
+        boxShadow={'-2px 0 10px rgba(107,70,193,0.5)'}
       >
-
+        <Heading 
+          textAlign={['center','left']}
+          size="md"  
+          children="Views Graph" 
+          pt={['8','0']}  
+          ml={['0','16']}
+        />
+          
+          {/* Line Graph here  */}
+          <LineChart/>
       </Box>
+        
+        <Grid templateColumns={['1fr','2fr 1fr']}>
+          <Box p={'4'}>
+            <Heading  
+              textAlign={['center','left']} 
+              size='md' 
+              children="Progress Bar" 
+              my="8" 
+              ml={['0','16']} 
+
+            />
+
+            <Box>
+              <Bar title="Views" value={30} profit={true} />
+              <Bar title="Users" value={78} profit={true} />
+              <Bar title="Subscription" value={20} profit={false} />
+            </Box>
+          </Box>
+
+          <Box p={['0','16']} boxSizing='border-box' py="4" >
+            <Heading textAlign={'center'} size="md"  mb="4" children="Users" />
+            {/* DoughnutChart here  */}
+            <DoughnutChart/>
+          </Box>
+        </Grid>
     </Box>
 
     <Sidebar/>
