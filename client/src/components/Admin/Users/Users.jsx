@@ -14,7 +14,16 @@ const  Users = () => {
       status:"active"
     },
     email:"abhi@gmail.com"
-  }]
+  }];
+
+  const updateHandler = (userId)=>{
+    console.log(userId);
+  }
+
+  const deleteButtonHandler=(userId)=>{
+    console.log(userId);
+  }
+
   return <Grid
     css={{
         cursor:`url(${cursor}),default`,
@@ -47,7 +56,7 @@ const  Users = () => {
            <Tbody>
              {
                 users.map(item=>(
-                  <Row  key={item._id} item={item}/>
+                  <Row updateHandler={updateHandler} deleteButtonHandler={deleteButtonHandler} key={item._id} item={item}/>
                 ))
              }
            </Tbody>
@@ -62,7 +71,7 @@ const  Users = () => {
 
 export default Users
 
-function Row({item}){
+function Row({item,updateHandler,deleteButtonHandler}){
   return(
     <Tr>
       <Td>#{item._id}</Td>
@@ -72,8 +81,22 @@ function Row({item}){
       <Td>{item.subscription.status === 'active' ?"Active" :"Not Active"}</Td>
       <Td isNumeric>
         <HStack justifyContent={'flex-end'}>
-          <Button variant={'outline'} color="purple.500">Change Role</Button>
-          <Button color={'purple.600'} ><RiDeleteBin7Fill/></Button>
+          <Button 
+            onClick={()=> 
+            updateHandler(item._id)} 
+            variant={'outline'} 
+            color="purple.500"
+          >
+            Change Role
+          </Button>
+
+
+          <Button 
+            color={'purple.600'} 
+            onClick={()=>deleteButtonHandler(item._id)}
+          >
+            <RiDeleteBin7Fill/>
+          </Button>
         </HStack>  
       </Td>
     </Tr>
