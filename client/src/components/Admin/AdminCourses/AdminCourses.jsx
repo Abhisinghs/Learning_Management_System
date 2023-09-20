@@ -38,7 +38,7 @@ const AdminCourses = () => {
 
   const { isOpen, onClose, onOpen } = useDisclosure();
   const courseDetailsHandler = userId => {
-    console.log(userId);
+    onOpen();
   };
 
   const deleteButtonHandler = userId => {
