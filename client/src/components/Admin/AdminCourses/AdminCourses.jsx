@@ -45,10 +45,10 @@ const AdminCourses = () => {
     console.log(userId);
   };
 
-  const deleteLectureButtonHandler = (courseId, lectureId) => {
-    console.log(courseId);
-    console.log(lectureId);
-  };
+  // const deleteLectureButtonHandler = (courseId, lectureId) => {
+  //   console.log(courseId);
+  //   console.log(lectureId);
+  // };
 
   const addLectureHandler =(e,courseId,title,description,video)=>{
     e.preventDefault();
@@ -131,7 +131,7 @@ function Row({ item, courseDetailsHandler, deleteButtonHandler }) {
       <Td isNumeric>
         <HStack justifyContent={'flex-end'}>
           <Button
-            onClick={() => courseDetailsHandler(item._id)}
+            // onClick={() => courseDetailsHandler(item._id)}
             variant={'outline'}
             color="purple.500"
           >
