@@ -15,8 +15,43 @@ const userSchema = new mongoose.Schema({
     },
     password:{
         type:String,
-        required:[true,"Password enter your Password"]
-    }
+        required:[true,"Password enter your Password"],
+        minLength:[6,"Password must be at least 6 characters"],
+        select:false,
+    },
+    role:{
+        type:String,
+        enum:["admin","user"],
+        default:"user",
+    },
+    subscription:{
+        id:String,
+        status:String,
+    },
+    avatar:{
+        public_id:{
+            type:String,
+            required:true
+        },
+        url:{
+            type:String,
+            required:true
+        },
+    },
+    playlist:[{
+        course:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Course",
+        },
+        poster:String
+    }],
+    createdAt:{
+        type:Date,
+        default:Date.now,
+    },
+    ResetPasswordToken:String,
+    ResetPasswordExpire:String,
+
 })
 
 //user modal 
