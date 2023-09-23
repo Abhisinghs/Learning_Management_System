@@ -45,6 +45,26 @@ const courseSchema = new mongoose.Schema({
             required:true
         },
     },
+    views:{
+        type:Number,
+        default:0,
+    },
+    numOfVideos:{
+        type:Number,
+        default:0
+    },
+    category:{
+        type:String,
+        required:true,
+    },
+    createdBy:{
+        type:String,
+        required:[true,"Enter Course Creator Name"],
+    },
+    createdAt:{
+        type:Date,
+        default:Date.now,
+    },
 
 })
 
