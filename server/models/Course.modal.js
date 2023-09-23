@@ -1,0 +1,54 @@
+import mongoose from "mongoose";
+
+const courseSchema = new mongoose.Schema({
+    title:{
+        type:String,
+        required:[true,"Please enter course title"],
+        minLength:[4,"Title must be at least 4 Characters"],
+        maxLength:[80,"Title can't exceed 80 characters"]
+    },
+    description:{
+        type:String,
+        required:[true,"Please enter course title"],
+        minLength:[20,"Title must be at least 20 Characters"],
+    },
+    lectures:[
+        {
+            title:{
+                type:String,
+                required:true
+            },
+            description:{
+                type:String,
+                required:true
+            },
+            video:{
+                public_id:{
+                    type:String,
+                    required:true
+                },
+                url:{
+                    type:String,
+                    required:true
+                },
+            },
+            
+        }
+    ],
+    poster:{
+        public_id:{
+            type:String,
+            required:true
+        },
+        url:{
+            type:String,
+            required:true
+        },
+    },
+
+})
+
+const Course = mongoose.model("CourseData",courseSchema);
+
+//export modal
+export default Course;
