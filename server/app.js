@@ -2,6 +2,7 @@
 import express from 'express'
 import { config } from 'dotenv';
 import course from './routes/Course.route.js'
+import user from './routes/User.route.js'
 
 //set path of config file
 config({
@@ -13,6 +14,7 @@ const app = express();
 
 // importing & using routes
 app.use('/api/v1',course);
+app.use('/api/v1',user);
 
 
 //export module so other can use 

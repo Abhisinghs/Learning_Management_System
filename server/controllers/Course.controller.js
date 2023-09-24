@@ -1,7 +1,8 @@
-// define function 
+//import course modal
+import Course  from '../models/Course.modal.js'
 
 function getAllCourses(req,resp,next){
-    resp.send("working");
+    
 }
 
 export {
