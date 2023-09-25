@@ -3,6 +3,7 @@ import express from 'express'
 import { config } from 'dotenv';
 import course from './routes/Course.route.js'
 import user from './routes/User.route.js'
+import ErrorMiddleware from './middlewares/Error.js'
 
 //set path of config file
 config({
@@ -19,3 +20,5 @@ app.use('/api/v1',user);
 
 //export module so other can use 
 export default app;
+
+app.use(ErrorMiddleware);
