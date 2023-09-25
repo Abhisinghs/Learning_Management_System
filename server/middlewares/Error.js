@@ -1,4 +1,5 @@
 
+//Error handler to handle the all errors in programs
 const ErrorMiddleware=(err,req,resp,next)=>{
     err.statusCode=err.statusCode|| 500;
     err.message=err.message|| "Internal server Error";
