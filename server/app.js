@@ -13,6 +13,14 @@ config({
 //make instance of express
 const app = express();
 
+
+// using middleware 
+app.use(express.json());
+app.use(
+    express.urlencoded({
+        extended:true
+    })
+)
 // importing & using routes
 app.use('/api/v1',course);
 app.use('/api/v1',user);
