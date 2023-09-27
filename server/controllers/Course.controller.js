@@ -1,5 +1,5 @@
 //import course modal
-import { catchAsynError } from '../middlewares/catchAsynError.js'
+import  catchAsynError  from '../middlewares/catchAsynError.js'
 import Course  from '../models/Course.modal.js'
 import ErrorHandler from '../utils/errorHandler.js';
 
