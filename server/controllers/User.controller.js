@@ -1,6 +1,7 @@
 import  catchAsynError  from "../middlewares/catchAsynError.js";
 import User from "../models/User.modal.js";
 import ErrorHandler from "../utils/errorHandler.js";
+import sendToken from "../utils/sendToken.js";
 
 const register = catchAsynError(async(req,resp,next)=>{
     const {name,email,password}=req.body;
@@ -25,7 +26,8 @@ const register = catchAsynError(async(req,resp,next)=>{
         url:"tempurl",
       },
     });
-    
+
+    sendToken(resp,user,"Registered Successfully",201);
      
 });
 
