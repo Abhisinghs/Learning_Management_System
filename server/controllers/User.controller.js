@@ -3,63 +3,60 @@ import User from "../models/User.modal.js";
 import ErrorHandler from "../utils/errorHandler.js";
 import sendToken from "../utils/sendToken.js";
 
-const register = catchAsynError(async(req,resp,next)=>{
-    const {name,email,password}=req.body;
 
-    //const file = req.file;
+const register= catchAsynError(async(req,resp,next)=>{
+  const {name,email,password}=req.body;
 
-    if(!name ||!email || !password )
-      return next(new ErrorHandler("Please enter all fields",400));
+  //const file = req.file;
 
-    let user = await User.findOne({email});
-    
-    if(user) return next(new ErrorHandler("User Already Exist",409));
+  if(!name ||!email || !password )
+    return next(new ErrorHandler("Please enter all fields",400));
 
-    //upload file on cloudinay 
+  let user = await User.findOne({email});
+  
+  if(user) return next(new ErrorHandler("User Already Exist",409));
 
-    user = await User.create({
-      name ,
-      email,
-      password,
-      avatar:{
-        public_id:"tempid",
-        url:"tempurl",
-      },
-    });
+  //upload file on cloudinay 
 
-    sendToken(resp,user,"Registered Successfully",201);
-     
+  user = await User.create({
+    name ,
+    email,
+    password,
+    avatar:{
+      public_id:"tempid",
+      url:"tempurl",
+    },
+  });
+
+  sendToken(resp,user,"Registered Successfully",201);
+   
 });
 
 
-//logic for login 
+//logic for login
 const login = catchAsynError(async(req,resp,next)=>{
-    const {name,email,password}=req.body;
+    const {email,password}=req.body;
 
     //const file = req.file;
 
-    if(!name ||!email || !password )
+    if(!email || !password )
       return next(new ErrorHandler("Please enter all fields",400));
 
-    let user = await User.findOne({email});
+    const user = await User.findOne({email});
     
-    if(user) return next(new ErrorHandler("User Already Exist",409));
+    if(!user) return next(new ErrorHandler("User does not Exists",401));
 
-    //upload file on cloudinay 
+    const isMatch = await User.comparePassword();
 
-    user = await User.create({
-      name ,
-      email,
-      password,
-      avatar:{
-        public_id:"tempid",
-        url:"tempurl",
-      },
-    });
+    if(!isMatch) 
+      return next(new ErrorHandler("Incorrect Email or Password",401));
 
-    sendToken(resp,user,"Registered Successfully",201);
+    sendToken(resp,user,`Welcome back,${user.name}`,200);
      
 });
+
+
+ 
 
 export {
   register,
