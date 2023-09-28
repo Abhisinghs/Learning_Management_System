@@ -8,7 +8,7 @@ const sendToken = (resp,user,message,statusCode)=>{
         secure:true,
         sameSite:true,
     }
-    resp.statusCode(201).cookie("token",token,options).json({
+    resp.status(statusCode).cookie("token",token,options).json({
         success:true,
         message,
         user,

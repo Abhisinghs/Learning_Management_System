@@ -18,7 +18,7 @@ const register = catchAsynError(async(req,resp,next)=>{
     //upload file on cloudinay 
 
     user = await User.create({
-        name ,
+      name ,
       email,
       password,
       avatar:{
