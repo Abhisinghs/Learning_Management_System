@@ -37,6 +37,7 @@ const register= catchAsynError(async(req,resp,next)=>{
 const login = catchAsynError(async(req,resp,next)=>{
     const {email,password}=req.body;
 
+    console.log("email",email,"password",password);
     //const file = req.file;
 
     if(!email || !password )
@@ -46,7 +47,7 @@ const login = catchAsynError(async(req,resp,next)=>{
     
     if(!user) return next(new ErrorHandler("User does not Exists",401));
 
-    const isMatch = await User.comparePassword(password);
+    const isMatch = await user.comparePassword(password);
 
     if(!isMatch) 
       return next(new ErrorHandler("Incorrect Email or Password",401));
