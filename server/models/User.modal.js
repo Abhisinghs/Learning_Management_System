@@ -71,7 +71,6 @@ userSchema.methods.getJWTToken = function(){
 }
 
 userSchema.methods.comparePassword= async function(password){
-    console.log(this.password);  //to check something
     return await bcrypt.compare(password,this.password);
 }
 //user modal 

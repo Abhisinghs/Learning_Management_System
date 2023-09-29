@@ -36,14 +36,12 @@ const register= catchAsynError(async(req,resp,next)=>{
 //logic for login
 const login = catchAsynError(async(req,resp,next)=>{
     const {email,password}=req.body;
-
-    console.log("email",email,"password",password);
     //const file = req.file;
 
     if(!email || !password )
       return next(new ErrorHandler("Please enter all fields",400));
 
-    const user = await User.findOne({email});
+    const user = await User.findOne({email}).select('+password');
     
     if(!user) return next(new ErrorHandler("User does not Exists",401));
 
