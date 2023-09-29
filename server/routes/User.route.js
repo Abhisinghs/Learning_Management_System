@@ -14,5 +14,7 @@ router.route('/login').post(login)
 //Logout 
 router.route('/logout').get(logout);
 
+//other pages
+
 
 export default router;
