@@ -54,10 +54,19 @@ const login = catchAsynError(async(req,resp,next)=>{
      
 });
 
+const logout = catchAsynError(async(req,resp,next)=>{
+  resp.status(200).cookie("token",null,{
+    expires:new Date(Date.now()),
+  }).json({
+    success:true,
+    message:"Logged out Successfully",
+  });
 
+});
  
 
 export {
   register,
-  login
+  login,
+  logout
 } ;
