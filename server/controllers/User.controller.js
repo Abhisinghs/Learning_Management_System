@@ -46,7 +46,7 @@ const login = catchAsynError(async(req,resp,next)=>{
     
     if(!user) return next(new ErrorHandler("User does not Exists",401));
 
-    const isMatch = await User.comparePassword();
+    const isMatch = await User.comparePassword(password);
 
     if(!isMatch) 
       return next(new ErrorHandler("Incorrect Email or Password",401));
