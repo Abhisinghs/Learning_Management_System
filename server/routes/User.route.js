@@ -1,5 +1,6 @@
 import express from 'express'
 import {register,login, logout, getMyProfile } from '../controllers/User.controller.js';
+import isAuthenticated from '../middlewares/Auth.js';
 
 
 const router = express.Router();
@@ -16,7 +17,7 @@ router.route('/logout').get(logout);
 
 
 //get my profile
-router.route('/me').get(getMyProfile);
+router.route('/me').get(isAuthenticated, getMyProfile);
 
 
 export default router;

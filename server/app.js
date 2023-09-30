@@ -4,6 +4,7 @@ import { config } from 'dotenv';
 import course from './routes/Course.route.js'
 import user from './routes/User.route.js'
 import ErrorMiddleware from './middlewares/Error.js'
+import cookieParser from 'cookie-parser';
 
 //set path of config file
 config({
@@ -21,6 +22,7 @@ app.use(
         extended:true
     })
 )
+app.use(cookieParser());
 // importing & using routes
 app.use('/api/v1',course);
 app.use('/api/v1',user);
