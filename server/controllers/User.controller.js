@@ -64,6 +64,7 @@ const logout = catchAsynError(async(req,resp,next)=>{
 
 });
 
+
 const getMyProfile = catchAsynError(async(req,resp,next)=>{
   resp.status(200).cookie("token",null,{
     expires:new Date(Date.now()),
