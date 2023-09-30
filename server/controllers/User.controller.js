@@ -67,7 +67,7 @@ const logout = catchAsynError(async(req,resp,next)=>{
 
 const getMyProfile = catchAsynError(async(req,resp,next)=>{
   
-  const user = await User.findById()
+  const user = await User.findById(req.user._id);
   
   resp.status(200).json({
     success:true,
