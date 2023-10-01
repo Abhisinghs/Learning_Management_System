@@ -22,6 +22,8 @@ router.route('/me').get(isAuthenticated, getMyProfile);
 //change password
 router.route('/changepassword').put(isAuthenticated, changePassword);
 
+//update profile
+router.route('/updateprofile').put(isAuthenticated,updateProfile);
 
 
 export default router;

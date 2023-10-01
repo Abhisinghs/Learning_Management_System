@@ -125,11 +125,11 @@ const updateProfile = catchAsynError(async(req,resp,next)=>{
  
 });
 
-
 export {
   register,
   login,
   logout,
   getMyProfile,
   changePassword,
+  updateProfile
 } ;
