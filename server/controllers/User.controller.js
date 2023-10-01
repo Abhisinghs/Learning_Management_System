@@ -125,11 +125,21 @@ const updateProfile = catchAsynError(async(req,resp,next)=>{
  
 });
 
+const updateProfilePicture = catchAsynError(async(req,res,next)=>{
+
+
+  res.status(200).json({
+    success:true,
+    message:"Profile Picture Updated Successfully"
+  })
+})
+
 export {
   register,
   login,
   logout,
   getMyProfile,
   changePassword,
-  updateProfile
+  updateProfile,
+  updateProfilePicture
 } ;
