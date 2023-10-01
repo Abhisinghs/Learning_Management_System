@@ -75,11 +75,61 @@ const getMyProfile = catchAsynError(async(req,resp,next)=>{
   });
 
 });
+
+
+const changePassword = catchAsynError(async(req,resp,next)=>{
+  
+ const {oldPassword,newPassword}=req.body;
+
+ if(!oldPassword || !newPassword)
+   return next(new ErrorHandler("Please enter all field",400));
+
+ const user = await User.findById(req.user._id).select("+password");
+
+ const isMatch=await user.comparePassword(oldPassword);
+
+ if(!isMatch )
+   return next(new ErrorHandler("Incorrect Old Password",400));
+
+  user.password = newPassword;
+
+  await user.save();
+  
+  resp.status(200).json({
+    success:true,
+    message:"Password Changed Successfully",
+    
+  });
+
+});
  
+const updateProfile = catchAsynError(async(req,resp,next)=>{
+  
+  const {name,email}=req.body;
+ 
+  if(!name || !email)
+    return next(new ErrorHandler("Please enter all field",400));
+ 
+  const user = await User.findById(req.user._id);
+  
+  if(name) user.name=name;
+  if(email) user.email= email;
+
+  await user.save();
+   
+  resp.status(200).json({
+    success:true,
+    message:"Profile Updated Successfully",
+     
+  });
+ 
+});
+
 
 export {
   register,
   login,
   logout,
-  getMyProfile
+  getMyProfile,
+  changePassword,
 } ;

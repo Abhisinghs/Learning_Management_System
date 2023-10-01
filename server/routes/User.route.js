@@ -1,5 +1,5 @@
 import express from 'express'
-import {register,login, logout, getMyProfile } from '../controllers/User.controller.js';
+import {register,login, logout, getMyProfile, changePassword, updateProfile } from '../controllers/User.controller.js';
 import isAuthenticated from '../middlewares/Auth.js';
 
 
@@ -20,7 +20,8 @@ router.route('/logout').get(logout);
 router.route('/me').get(isAuthenticated, getMyProfile);
 
 //change password
-router.route('/me').get(isAuthenticated, getMyProfile);
+router.route('/changepassword').put(isAuthenticated, changePassword);
+
 
 
 export default router;
