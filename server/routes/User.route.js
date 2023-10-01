@@ -19,5 +19,8 @@ router.route('/logout').get(logout);
 //get my profile
 router.route('/me').get(isAuthenticated, getMyProfile);
 
+//change password
+router.route('/me').get(isAuthenticated, getMyProfile);
+
 
 export default router;
