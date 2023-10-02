@@ -132,6 +132,28 @@ const updateProfilePicture = catchAsynError(async(req,res,next)=>{
   })
 })
 
+
+const forgetPassword = catchAsynError(async(req,res,next)=>{
+
+  //cloudinary todo
+
+  res.status(200).json({
+    success:true,
+    message:"Profile Picture Updated Successfully"
+  })
+})
+
+
+const resetPassword = catchAsynError(async(req,res,next)=>{
+
+  //cloudinary todo
+
+  res.status(200).json({
+    success:true,
+    message:"Profile Picture Updated Successfully"
+  })
+})
+
 export {
   register,
   login,
@@ -139,5 +161,7 @@ export {
   getMyProfile,
   changePassword,
   updateProfile,
-  updateProfilePicture
+  updateProfilePicture,
+  forgetPassword,
+  resetPassword
 } ;
