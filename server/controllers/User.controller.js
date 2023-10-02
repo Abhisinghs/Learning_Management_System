@@ -135,7 +135,14 @@ const updateProfilePicture = catchAsynError(async(req,res,next)=>{
 
 const forgetPassword = catchAsynError(async(req,res,next)=>{
 
-  //cloudinary todo
+  const {email} = req.body;
+
+  const user = await User.findOne({email});
+
+  if(!user)
+    return next(new ErrorHandler("User not found",400));
+
+  const resetToken= await user.getResetToken();
 
   res.status(200).json({
     success:true,
