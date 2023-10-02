@@ -144,9 +144,11 @@ const forgetPassword = catchAsynError(async(req,res,next)=>{
 
   const resetToken= await user.getResetToken();
 
+  //send token via email 
+
   res.status(200).json({
     success:true,
-    message:"Profile Picture Updated Successfully"
+    message:`Reset Token has been sent to ${user.email}`,
   })
 })
 
