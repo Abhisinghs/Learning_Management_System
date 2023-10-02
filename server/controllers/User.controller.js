@@ -107,9 +107,6 @@ const updateProfile = catchAsynError(async(req,resp,next)=>{
   
   const {name,email}=req.body;
  
-  if(!name || !email)
-    return next(new ErrorHandler("Please enter all field",400));
- 
   const user = await User.findById(req.user._id);
   
   if(name) user.name=name;
