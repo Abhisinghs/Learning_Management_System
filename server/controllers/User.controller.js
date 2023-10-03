@@ -4,6 +4,7 @@ import ErrorHandler from "../utils/errorHandler.js";
 import sendToken from "../utils/sendToken.js";
 
 
+//logic for register user 
 const register= catchAsynError(async(req,resp,next)=>{
   const {name,email,password}=req.body;
 
@@ -54,6 +55,7 @@ const login = catchAsynError(async(req,resp,next)=>{
      
 });
 
+// logic for logout
 const logout = catchAsynError(async(req,resp,next)=>{
   resp.status(200).cookie("token",null,{
     expires:new Date(Date.now()),
@@ -65,6 +67,7 @@ const logout = catchAsynError(async(req,resp,next)=>{
 });
 
 
+//Logic for get profile data
 const getMyProfile = catchAsynError(async(req,resp,next)=>{
   
   const user = await User.findById(req.user._id);
@@ -77,6 +80,7 @@ const getMyProfile = catchAsynError(async(req,resp,next)=>{
 });
 
 
+// logic for change password 
 const changePassword = catchAsynError(async(req,resp,next)=>{
   
  const {oldPassword,newPassword}=req.body;
@@ -103,6 +107,8 @@ const changePassword = catchAsynError(async(req,resp,next)=>{
 
 });
  
+
+// logic for update details 
 const updateProfile = catchAsynError(async(req,resp,next)=>{
   
   const {name,email}=req.body;
@@ -122,6 +128,9 @@ const updateProfile = catchAsynError(async(req,resp,next)=>{
  
 });
 
+
+
+// update profile picture 
 const updateProfilePicture = catchAsynError(async(req,res,next)=>{
 
   //cloudinary todo
@@ -133,6 +142,8 @@ const updateProfilePicture = catchAsynError(async(req,res,next)=>{
 })
 
 
+
+//forget password logic 
 const forgetPassword = catchAsynError(async(req,res,next)=>{
 
   const {email} = req.body;
