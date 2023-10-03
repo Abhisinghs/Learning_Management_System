@@ -156,8 +156,9 @@ const forgetPassword = catchAsynError(async(req,res,next)=>{
 
   const resetToken= await user.getResetToken();
 
-
-  const message = `Click on the link to reset your password`
+   const url=`${process.env.FRONTEND_URL}/resetpassword/${resetToken}`
+   
+  const message = `Click on the link to reset your password. ${url}. If you have not request then please ignore.`
   //send token via email 
   sendEmail(user.email,"LearnHub Reset Password",message);
 
