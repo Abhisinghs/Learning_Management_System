@@ -1,6 +1,7 @@
 import  catchAsynError  from "../middlewares/catchAsynError.js";
 import User from "../models/User.modal.js";
 import ErrorHandler from "../utils/errorHandler.js";
+import sendEmail from "../utils/sendEmail.js";
 import sendToken from "../utils/sendToken.js";
 
 
@@ -155,7 +156,10 @@ const forgetPassword = catchAsynError(async(req,res,next)=>{
 
   const resetToken= await user.getResetToken();
 
+
+  const message = `Click on the link to reset your password`
   //send token via email 
+  sendEmail(user.email,"LearnHub Reset Password",message);
 
   res.status(200).json({
     success:true,
@@ -165,8 +169,6 @@ const forgetPassword = catchAsynError(async(req,res,next)=>{
 
 
 const resetPassword = catchAsynError(async(req,res,next)=>{
-
-  //cloudinary todo
 
   res.status(200).json({
     success:true,
