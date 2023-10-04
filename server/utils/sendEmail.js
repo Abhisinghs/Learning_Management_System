@@ -10,6 +10,7 @@ const sendEmail = async (to, subject, text) => {
     },
   });
 
+  //now its time to check wheter it is working or not 
   await transporter.sendMail({
     to,
     subject,
