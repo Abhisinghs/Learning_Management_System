@@ -3,6 +3,7 @@ import User from "../models/User.modal.js";
 import ErrorHandler from "../utils/errorHandler.js";
 import sendEmail from "../utils/sendEmail.js";
 import sendToken from "../utils/sendToken.js";
+import crypto from 'crypto';
 
 
 //logic for register user 
@@ -156,6 +157,8 @@ const forgetPassword = catchAsynError(async(req,res,next)=>{
 
   const resetToken= await user.getResetToken();
 
+  await user.save();
+
   const url=`${process.env.FRONTEND_URL}/resetpassword/${resetToken}`
    
   const message = `Click on the link to reset your password. ${url}. If you have not request then please ignore.`
@@ -174,10 +177,31 @@ const forgetPassword = catchAsynError(async(req,res,next)=>{
 const resetPassword = catchAsynError(async(req,res,next)=>{
 
   const {token}= req.params;
+  const resetPasswordToken = crypto
+  .createHash("sha256")
+  .update(token)
+  .digest("hex");
+
+  const user =await User.findOne({
+    resetPasswordToken,
+    resetPasswordExpire:{
+      $gt:Date.now(),
+    },
+  });
+
+  if(!user)
+   return next(new ErrorHandler("Token is invalid or has been expired"))
+
+  if(!req.body.password)
+    return next(new ErrorHandler("please enter new password"));
+  user.password = req.body.password;
+  user.resetPasswordToken=undefined;
+  user.resetPasswordExpire = undefined;
+  user.save();
 
   res.status(200).json({
     success:true,
-    message:"Profile Picture Updated Successfully",
+    message:"Password Changed successfully",
     token
   })
 })
