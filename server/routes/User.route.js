@@ -41,6 +41,6 @@ router
 router.route("/forgetpassword").post(forgetPassword);
 
 //reset password
-router.route("/resetpassword/token:").post(resetPassword);
+router.route("/resetpassword/:token").put(resetPassword);
 
 export default router;

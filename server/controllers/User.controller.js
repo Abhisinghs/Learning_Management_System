@@ -160,7 +160,7 @@ const forgetPassword = catchAsynError(async(req,res,next)=>{
    
   const message = `Click on the link to reset your password. ${url}. If you have not request then please ignore.`
 
-  
+
   //send token via email 
   await sendEmail(user.email,"LearnHub Reset Password",message);
 
@@ -173,9 +173,12 @@ const forgetPassword = catchAsynError(async(req,res,next)=>{
 
 const resetPassword = catchAsynError(async(req,res,next)=>{
 
+  const {token}= req.params;
+
   res.status(200).json({
     success:true,
-    message:"Profile Picture Updated Successfully"
+    message:"Profile Picture Updated Successfully",
+    token
   })
 })
 
