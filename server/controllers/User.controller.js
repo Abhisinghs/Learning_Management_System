@@ -160,7 +160,7 @@ const forgetPassword = catchAsynError(async(req,res,next)=>{
    
   const message = `Click on the link to reset your password. ${url}. If you have not request then please ignore.`
   //send token via email 
-  sendEmail(user.email,"LearnHub Reset Password",message);
+  await sendEmail(user.email,"LearnHub Reset Password",message);
 
   res.status(200).json({
     success:true,
