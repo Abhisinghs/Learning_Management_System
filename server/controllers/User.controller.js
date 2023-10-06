@@ -208,6 +208,23 @@ const resetPassword = catchAsynError(async(req,res,next)=>{
 
 const addToPlaylist = catchAsynError(async(req,resp,next)=>{
 
+  const user = await User.findById(req.user._id);
+  const course = await course.findById(req.body.id);
+
+  if(!course) return next(ErrorHandler("Invalid Course Id",404));
+
+  user.playlist.push({
+    course:course._id,
+    poster:course.poster.url,
+  });
+
+  await user.save();
+
+  resp.status(200).json({
+    success:true,
+    message:"Added To Playlist",
+  
+  })
 })
 
 export {
