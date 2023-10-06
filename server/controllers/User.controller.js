@@ -206,6 +206,10 @@ const resetPassword = catchAsynError(async(req,res,next)=>{
   })
 })
 
+const addToPlaylist = catchAsynError(async(req,resp,next)=>{
+
+})
+
 export {
   register,
   login,
@@ -215,5 +219,6 @@ export {
   updateProfile,
   updateProfilePicture,
   forgetPassword,
-  resetPassword
+  resetPassword,
+  addToPlaylist
 } ;
