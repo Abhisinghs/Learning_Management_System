@@ -45,6 +45,6 @@ router.route("/forgetpassword").post(forgetPassword);
 router.route("/resetpassword/:token").put(resetPassword);
 
 //add to playlist 
-router.route("addtoplaylist").post(isAuthenticated,addToPlaylist);
+router.route("/addtoplaylist").post(isAuthenticated,addToPlaylist);
 
 export default router;

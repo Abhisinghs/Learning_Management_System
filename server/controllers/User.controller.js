@@ -4,6 +4,7 @@ import ErrorHandler from "../utils/errorHandler.js";
 import sendEmail from "../utils/sendEmail.js";
 import sendToken from "../utils/sendToken.js";
 import crypto from 'crypto';
+import getAllCourses from '../controllers/Course.controller.js';
 
 
 //logic for register user 
@@ -209,7 +210,7 @@ const resetPassword = catchAsynError(async(req,res,next)=>{
 const addToPlaylist = catchAsynError(async(req,resp,next)=>{
 
   const user = await User.findById(req.user._id);
-  const course = await course.findById(req.body.id);
+  const course = await getAllCourses.findById(req.body.id);
 
   if(!course) return next(ErrorHandler("Invalid Course Id",404));
 
