@@ -10,6 +10,7 @@ import {
   forgetPassword,
   resetPassword,
   addToPlaylist,
+  removeFromPlaylist,
 } from "../controllers/User.controller.js";
 import isAuthenticated from "../middlewares/Auth.js";
 
@@ -46,5 +47,8 @@ router.route("/resetpassword/:token").put(resetPassword);
 
 //add to playlist 
 router.route("/addtoplaylist").post(isAuthenticated,addToPlaylist);
+
+//remove from playlist
+router.route("/removefromplaylist").post(isAuthenticated,removeFromPlaylist);
 
 export default router;

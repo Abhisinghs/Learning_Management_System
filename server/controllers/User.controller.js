@@ -233,6 +233,34 @@ const addToPlaylist = catchAsynError(async(req,resp,next)=>{
   })
 })
 
+
+const removeFromPlaylist = catchAsynError(async(req,resp,next)=>{
+
+  const user = await User.findById(req.user._id);
+  const course = await Course.findById(req.body.id);
+
+  if(!course) return next(ErrorHandler("Invalid Course Id",404));
+
+  const itemExist = user.playlist.find((item)=>{
+    if(item.course.toString() === course._id.toString()) return true;
+  });
+
+  if(itemExist) return next (new ErrorHandler("Item Already Exist",409));
+
+  user.playlist.push({
+    course:course._id,
+    poster:course.poster.url,
+  });
+
+  await user.save();
+
+  resp.status(200).json({
+    success:true,
+    message:"Remove From Playlist",
+  
+  })
+})
+
 export {
   register,
   login,
@@ -243,5 +271,6 @@ export {
   updateProfilePicture,
   forgetPassword,
   resetPassword,
-  addToPlaylist
+  addToPlaylist,
+  removeFromPlaylist
 } ;
