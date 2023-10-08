@@ -4,8 +4,7 @@ import ErrorHandler from "../utils/errorHandler.js";
 import sendEmail from "../utils/sendEmail.js";
 import sendToken from "../utils/sendToken.js";
 import crypto from 'crypto';
-import getAllCourses from '../controllers/Course.controller.js';
-
+import Course from '../models/Course.modal.js'
 
 //logic for register user 
 const register= catchAsynError(async(req,resp,next)=>{
@@ -210,9 +209,15 @@ const resetPassword = catchAsynError(async(req,res,next)=>{
 const addToPlaylist = catchAsynError(async(req,resp,next)=>{
 
   const user = await User.findById(req.user._id);
-  const course = await getAllCourses.findById(req.body.id);
+  const course = await Course.findById(req.body.id);
 
   if(!course) return next(ErrorHandler("Invalid Course Id",404));
+
+  const itemExist = user.playlist.find((item)=>{
+    if(item.course.to_String() === course._id.to_String()) return true;
+  });
+
+  if(itemExist) return next (new ErrorHandler("Item Already Exist",409));
 
   user.playlist.push({
     course:course._id,
