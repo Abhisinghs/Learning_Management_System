@@ -214,7 +214,7 @@ const addToPlaylist = catchAsynError(async(req,resp,next)=>{
   if(!course) return next(ErrorHandler("Invalid Course Id",404));
 
   const itemExist = user.playlist.find((item)=>{
-    if(item.course.to_String() === course._id.to_String()) return true;
+    if(item.course.toString() === course._id.toString()) return true;
   });
 
   if(itemExist) return next (new ErrorHandler("Item Already Exist",409));
