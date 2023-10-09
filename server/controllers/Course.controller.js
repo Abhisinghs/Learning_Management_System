@@ -38,10 +38,11 @@ const getCourseLectures = catchAsynError(async function getAllCourses(req,resp,n
 
     course.views+=1;
 
-    await course.save()
+    await course.save();
+
     resp.status(200).json({
         success:true,
-        courses
+        lecture:course.lectures
     })
 })
 export {
