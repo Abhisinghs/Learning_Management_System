@@ -31,7 +31,15 @@ const createCourse = catchAsynError(async function getAllCourses(req,resp,next){
     })
 })
 
+const getCourseLectures = catchAsynError(async function getAllCourses(req,resp,next){
+    const courses=await Course.find().select("-lectures");
+    resp.status(200).json({
+        success:true,
+        courses
+    })
+})
 export {
     getAllCourses,
-    createCourse
+    createCourse,
+    getCourseLectures
 }
