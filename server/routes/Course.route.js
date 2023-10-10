@@ -10,7 +10,9 @@ router.route('/courses').get(getAllCourses);
 router.route('/createcourses').post(createCourse);
 
 //Add lecture  //get lectures  
-router.route('/course/:id').get(getCourseLectures); 
+router.route('/course/:id').get(getCourseLectures).post(
+    
+); 
 
 //Delete lecture,get course details
 

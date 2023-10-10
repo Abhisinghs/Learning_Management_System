@@ -31,12 +31,27 @@ const createCourse = catchAsynError(async function getAllCourses(req,resp,next){
     })
 })
 
-const getCourseLectures = catchAsynError(async function getAllCourses(req,resp,next){
+
+
+const addLecture = catchAsynError(async function getAllCourses(req,resp,next){
+
+    const {id}= req.params;
+    const {title,description}=req.body;
+    
     const course =await Course.findById(req.params.id);
 
     if(!course) return next(new ErrorHandler("Course not Found",404));
 
-    course.views+=1;
+    //upload file here
+
+    course.lectures.push({
+        title,
+        description,
+        video:{
+            public_id:"url",
+            url:"url"
+        }
+    })
 
     await course.save();
 
@@ -48,5 +63,6 @@ const getCourseLectures = catchAsynError(async function getAllCourses(req,resp,n
 export {
     getAllCourses,
     createCourse,
-    getCourseLectures
+    getCourseLectures,
+    addLecture
 }
