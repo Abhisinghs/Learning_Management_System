@@ -1,7 +1,9 @@
 //import course modal
 import  catchAsynError  from '../middlewares/catchAsynError.js'
 import Course  from '../models/Course.modal.js'
+import getDatauri from '../utils/dataUri.js';
 import ErrorHandler from '../utils/errorHandler.js';
+import cloudinary from 'cloudinary'; 
 
 const getAllCourses = catchAsynError(async function getAllCourses(req,resp,next){
     const courses=await Course.find().select("-lectures");
@@ -17,11 +19,14 @@ const createCourse = catchAsynError(async function getAllCourses(req,resp,next){
     if(!title || !description || !category || !createdBy) 
        return next(new ErrorHandler("Please add all fields",400));
 
-    // const file = req.file;
+    const file = req.file;
+    const fileUri = getDatauri(file);
+    const mycloud = await cloudinary.v2.uploader.upload(fileUri.content);
+
     await Course.create({
         title,description,category,createdBy,poster :{
-            public_id:"temp",
-            url:"temp",
+            public_id:mycloud.public_id,
+            url:mycloud.url,
         },
     });
 
