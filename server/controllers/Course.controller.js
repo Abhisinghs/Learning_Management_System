@@ -31,13 +31,27 @@ const createCourse = catchAsynError(async function getAllCourses(req,resp,next){
     })
 })
 
+const getCourseLectures = catchAsynError(async function getAllCourses(req,resp,next){
+    const courses=await Course.find().select("-lectures");
+    const course =await Course.findById(req.params.id);
 
+    if(!course) return next(new ErrorHandler("Course not Found",404));
+
+    course.views+=1;
+
+    await course.save()
+    resp.status(200).json({
+        success:true,
+        courses
+    });
+})
 
 const addLecture = catchAsynError(async function getAllCourses(req,resp,next){
 
     const {id}= req.params;
     const {title,description}=req.body;
-    
+    const file = req.file;
+
     const course =await Course.findById(req.params.id);
 
     if(!course) return next(new ErrorHandler("Course not Found",404));
@@ -53,11 +67,12 @@ const addLecture = catchAsynError(async function getAllCourses(req,resp,next){
         }
     })
 
+    course.numOfVideos= course.lectures.length;
     await course.save();
 
     resp.status(200).json({
         success:true,
-        lecture:course.lectures
+        message:"Lecture added in course successfully"
     })
 })
 export {
