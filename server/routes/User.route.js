@@ -12,7 +12,7 @@ import {
   addToPlaylist,
   removeFromPlaylist,
 } from "../controllers/User.controller.js";
-import isAuthenticated from "../middlewares/Auth.js";
+import {isAuthenticated} from "../middlewares/Auth.js";
 
 const router = express.Router();
 
