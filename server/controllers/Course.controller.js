@@ -1,6 +1,7 @@
 //import course modal
 import catchAsynError from "../middlewares/catchAsynError.js";
 import Course from "../models/Course.modal.js";
+import getDataUri from "../utils/dataUri.js";
 import getDatauri from "../utils/dataUri.js";
 import ErrorHandler from "../utils/errorHandler.js";
 import cloudinary from "cloudinary";
@@ -28,20 +29,20 @@ const createCourse = catchAsynError(async function getAllCourses(
     return next(new ErrorHandler("Please add all fields", 400));
 
 
-  // const file = req.file;
-  // const fileUri = getDatauri(file);
-  // const mycloud = await cloudinary.v2.uploader.upload(fileUri.content);
-  // console.log("object");
+  try{
+    const file = req.file;
+  const fileUri = getDataUri(file);
+  const mycloud = await cloudinary.v2.uploader.upload(fileUri.content);
   await Course.create({
     title,
     description,
     category,
     createdBy,
     poster: {
-      public_id: "temp",
-      url:"temp",
-      // public_id: mycloud.public_id,
-      // url: mycloud.secure_url,
+      // public_id: "temp",
+      // url:"temp",
+      public_id: mycloud.public_id,
+      url: mycloud.secure_url,
     },
   });
 
@@ -49,6 +50,12 @@ const createCourse = catchAsynError(async function getAllCourses(
     success: true,
     message: "Course Created Successfully. You can add lectures now.",
   });
+  }catch(err){
+    resp.status(404).json({
+      success:false,
+      message:`Error while creating course ${err}`
+    })
+  }
 });
 
 const getCourseLectures = catchAsynError(async function getAllCourses(
