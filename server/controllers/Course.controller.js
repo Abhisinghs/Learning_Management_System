@@ -28,18 +28,20 @@ const createCourse = catchAsynError(async function getAllCourses(
     return next(new ErrorHandler("Please add all fields", 400));
 
 
-  const file = req.file;
-  const fileUri = getDatauri(file);
-  const mycloud = await cloudinary.v2.uploader.upload(fileUri.content);
-  console.log("object");
+  // const file = req.file;
+  // const fileUri = getDatauri(file);
+  // const mycloud = await cloudinary.v2.uploader.upload(fileUri.content);
+  // console.log("object");
   await Course.create({
     title,
     description,
     category,
     createdBy,
     poster: {
-      public_id: mycloud.public_id,
-      url: mycloud.secure_url,
+      public_id: "temp",
+      url:"temp",
+      // public_id: mycloud.public_id,
+      // url: mycloud.secure_url,
     },
   });
 
