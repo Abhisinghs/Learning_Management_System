@@ -3,6 +3,7 @@ import {
   addLecture,
   createCourse,
   deleteCourse,
+  deleteLecture,
   getAllCourses,
   getCourseLectures,
 } from "../controllers/Course.controller.js";
@@ -22,7 +23,7 @@ router.route("/createcourses").post(isAuthenticated,authorizedAdmin,singleUpload
 router.route("/course/:id").get(isAuthenticated,getCourseLectures).post(isAuthenticated,authorizedAdmin,singleUpload,addLecture).delete(isAuthenticated,authorizedAdmin,deleteCourse);
 
 //Delete lecture,get course details
+router.route("/lecture").delete(isAuthenticated,authorizedAdmin,deleteLecture);
 
-//delete lecture,
 
 export default router;
