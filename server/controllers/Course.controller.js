@@ -62,7 +62,7 @@ const getCourseLectures = catchAsynError(async function getAllCourses(
   resp,
   next
 ) {
-  const courses = await Course.find().select("-lectures");
+ 
   const course = await Course.findById(req.params.id);
 
   if (!course) return next(new ErrorHandler("Course not Found", 404));
@@ -115,7 +115,7 @@ const addLecture = catchAsynError(async function getAllCourses(
 
 
 
-const deleteCourse = catchAsynError(async function getAllCourses(req,resp,next) {
+const deleteCourse = catchAsynError(async (req,resp,next) => {
  
   const {id} = req.params;
 
@@ -123,7 +123,23 @@ const deleteCourse = catchAsynError(async function getAllCourses(req,resp,next) 
 
   if(!course) return next(new ErrorHandler("Course not Found",404));
 
-  
+  await cloudinary.v2.uploader.destroy(course.poster.public_id);
+
+  for(let i=0;i<course.lectures.length;i++){
+    const singleLecture = course.lectures[i];
+    await cloudinary.v2.uploader.destroy(singleLecture.video.public_id,{
+      resource_type:"video",
+    });
+  }
+
+  const del_course = await course.deleteOne({id});
+ 
+
+
+  resp.status(200).json({
+    success:true,
+    message:"Course deleted successfully",
+  })
 });
 
 export { getAllCourses, createCourse, getCourseLectures, addLecture,deleteCourse };
