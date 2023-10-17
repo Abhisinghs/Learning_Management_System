@@ -5,32 +5,33 @@ import sendEmail from "../utils/sendEmail.js";
 import sendToken from "../utils/sendToken.js";
 import crypto from 'crypto';
 import Course from '../models/Course.modal.js'
+import cloudinary from 'cloudinary';
+import getDataUri from "../utils/dataUri.js";
 
 //logic for register user 
 const register= catchAsynError(async(req,resp,next)=>{
   const {name,email,password}=req.body;
-
   const file = req.file;
-  const fileUri = getDataUri(file);
-  const mycloud = await cloudinary.v2.uploader.upload(fileUri.content);
- 
 
-  if(!name ||!email || !password )
+
+  if(!name ||!email || !password || !file )
     return next(new ErrorHandler("Please enter all fields",400));
 
   let user = await User.findOne({email});
   
   if(user) return next(new ErrorHandler("User Already Exist",409));
 
-  //upload file on cloudinay 
-
+  
+  const fileUri = getDataUri(file);
+  const mycloud = await cloudinary.v2.uploader.upload(fileUri.content);
+ 
   user = await User.create({
     name ,
     email,
     password,
     avatar:{
-      public_id:"tempid",
-      url:"tempurl",
+      public_id:mycloud.public_id,
+      url:mycloud.secure_url,
     },
   });
 
@@ -42,7 +43,6 @@ const register= catchAsynError(async(req,resp,next)=>{
 //logic for login
 const login = catchAsynError(async(req,resp,next)=>{
     const {email,password}=req.body;
-    //const file = req.file;
 
     if(!email || !password )
       return next(new ErrorHandler("Please enter all fields",400));
@@ -138,7 +138,17 @@ const updateProfile = catchAsynError(async(req,resp,next)=>{
 // update profile picture 
 const updateProfilePicture = catchAsynError(async(req,res,next)=>{
 
-  //cloudinary todo
+  const file = req.file;
+  const user = await User.findById(req.user._id);
+  const fileUri = getDataUri(file);
+  const mycloud = await cloudinary.v2.uploader.upload(fileUri.content);
+ 
+  await cloudinary.v2.uploader.destroy(user.avatar.public_id);
+
+  user.avatar={
+    public_id:mycloud.public_id,
+    url:mycloud.secure_url
+  }
 
   res.status(200).json({
     success:true,
