@@ -10,7 +10,10 @@ import Course from '../models/Course.modal.js'
 const register= catchAsynError(async(req,resp,next)=>{
   const {name,email,password}=req.body;
 
-  //const file = req.file;
+  const file = req.file;
+  const fileUri = getDataUri(file);
+  const mycloud = await cloudinary.v2.uploader.upload(fileUri.content);
+ 
 
   if(!name ||!email || !password )
     return next(new ErrorHandler("Please enter all fields",400));
