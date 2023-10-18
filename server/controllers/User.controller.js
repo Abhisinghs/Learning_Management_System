@@ -279,6 +279,25 @@ const getAllUsers = catchAsynError(async(req,resp,next)=>{
   })
 })
 
+
+const updateUserRole = catchAsynError(async(req,resp,next)=>{
+
+  const user = await User.findById(req.params.id);
+
+  if(!user) return next(new ErrorHandler("User Not Found",404));
+
+  if(user.role ==="user") user.role="admin";
+  else user.role="user";
+
+  await user.save();
+
+  resp.status(200).json({
+    success:true,
+    message:"Role update Successfully"
+  
+  })
+})
+
 export {
   register,
   login,
@@ -291,5 +310,6 @@ export {
   resetPassword,
   addToPlaylist,
   removeFromPlaylist,
-  getAllUsers
+  getAllUsers,
+  updateUserRole
 } ;

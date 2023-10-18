@@ -12,6 +12,7 @@ import {
   addToPlaylist,
   removeFromPlaylist,
   getAllUsers,
+  updateUserRole,
 } from "../controllers/User.controller.js";
 import {authorizedAdmin, isAuthenticated} from "../middlewares/Auth.js";
 import singleUpload from "../middlewares/multer.js";
@@ -58,6 +59,6 @@ router.route("/removefromplaylist").delete(isAuthenticated,removeFromPlaylist);
 router.route('/admin/users').get(isAuthenticated,authorizedAdmin,getAllUsers);
 
 
-router.route('/admin/users/:id').put(isAuthenticated,authorizedAdmin,getAllUsers);
+router.route('/admin/users/:id').put(isAuthenticated,authorizedAdmin,updateUserRole);
 
 export default router;
