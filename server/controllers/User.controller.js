@@ -267,6 +267,18 @@ const removeFromPlaylist = catchAsynError(async(req,resp,next)=>{
   })
 })
 
+//Admin controllers
+const getAllUsers = catchAsynError(async(req,resp,next)=>{
+
+  const users = await User.find({});
+
+  resp.status(200).json({
+    success:true,
+    users,
+  
+  })
+})
+
 export {
   register,
   login,
@@ -278,5 +290,6 @@ export {
   forgetPassword,
   resetPassword,
   addToPlaylist,
-  removeFromPlaylist
+  removeFromPlaylist,
+  getAllUsers
 } ;
