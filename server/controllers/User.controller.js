@@ -303,9 +303,13 @@ const deleteUser = catchAsynError(async(req,resp,next)=>{
 
   const user = await User.findById(req.params.id);
 
+  if(!user) return next(new ErrorHandler("User not found",404));
   
+  await cloudinary.v2.uploader.destroy(user.avatar.public_id);
 
-  
+  //cancel subscription 
+
+  await user.save();
 
   resp.status(200).json({
     success:true,
