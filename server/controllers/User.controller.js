@@ -298,6 +298,22 @@ const updateUserRole = catchAsynError(async(req,resp,next)=>{
   })
 })
 
+
+const deleteUser = catchAsynError(async(req,resp,next)=>{
+
+  const user = await User.findById(req.params.id);
+
+  
+
+  
+
+  resp.status(200).json({
+    success:true,
+    message:"User Deleted Successfully"
+  
+  })
+})
+
 export {
   register,
   login,
@@ -311,5 +327,6 @@ export {
   addToPlaylist,
   removeFromPlaylist,
   getAllUsers,
-  updateUserRole
+  updateUserRole,
+  deleteUser
 } ;
