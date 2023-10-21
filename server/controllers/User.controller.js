@@ -271,6 +271,8 @@ const deleteUser = catchAsynError(async (req, resp, next) => {
   await cloudinary.v2.uploader.destroy(user.avatar.public_id);
 
   //cancel subscription
+
+  user.remove();
   await user.save();
 
   
