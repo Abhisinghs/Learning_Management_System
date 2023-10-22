@@ -14,6 +14,7 @@ import {
   getAllUsers,
   updateUserRole,
   deleteUser,
+  deleteMyProfile,
 } from "../controllers/User.controller.js";
 import {authorizedAdmin, isAuthenticated} from "../middlewares/Auth.js";
 import singleUpload from "../middlewares/multer.js";
@@ -31,6 +32,9 @@ router.route("/logout").get(logout);
 
 //get my profile
 router.route("/me").get(isAuthenticated, getMyProfile);
+
+//Delete my profile 
+router.route("/me").delete(isAuthenticated, deleteMyProfile);
 
 //change password
 router.route("/changepassword").put(isAuthenticated, changePassword);
