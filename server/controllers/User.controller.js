@@ -275,33 +275,32 @@ const deleteUser = catchAsynError(async (req, resp, next) => {
   user.remove();
   await user.save();
 
-  
-  resp.status(200).json({
-    success: true,
-    message: "User Deleted Successfully",
-  });
-});
-
-
-const deleteMyProfile = catchAsynError(async (req, resp, next) => {
-  const user = await User.findById(req.user._id);
-
-  
-
-  await cloudinary.v2.uploader.destroy(user.avatar.public_id);
-
-  //cancel subscription
-
-  
-  await user.deleteOne(req.user._id);
-
-  
   resp.status(200).cookie("token",null,{
     expires:new Date(Date.now()),
   }).json({
     success: true,
     message: "User Deleted Successfully",
   });
+});
+
+const deleteMyProfile = catchAsynError(async (req, resp, next) => {
+  const user = await User.findById(req.user._id);
+
+  await cloudinary.v2.uploader.destroy(user.avatar.public_id);
+
+  //cancel subscription
+
+  await user.deleteOne(req.user._id);
+
+  resp
+    .status(200)
+    .cookie("token", null, {
+      expires: new Date(Date.now()),
+    })
+    .json({
+      success: true,
+      message: "User Deleted Successfully",
+    });
 });
 
 export {
@@ -319,5 +318,5 @@ export {
   getAllUsers,
   updateUserRole,
   deleteUser,
-  deleteMyProfile
+  deleteMyProfile,
 };
