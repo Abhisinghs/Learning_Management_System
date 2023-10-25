@@ -3,6 +3,7 @@ import express from 'express'
 import { config } from 'dotenv';
 import course from './routes/Course.route.js'
 import user from './routes/User.route.js'
+import payment from './routes/Payment.route.js'
 import ErrorMiddleware from './middlewares/Error.js'
 import cookieParser from 'cookie-parser';
 
@@ -26,6 +27,7 @@ app.use(cookieParser());
 // importing & using routes
 app.use('/api/v1',course);
 app.use('/api/v1',user);
+app.use('/api/v1',payment)
 
 
 //export module so other can use 
