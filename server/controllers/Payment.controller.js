@@ -19,6 +19,13 @@ const buySubscription = catchAsynError(async (req,resp,next)=>{
 
     user.subscription.id= subscription.id;
     user.subscription.status= subscription.status;
+
+    await user.save();
+
+    resp.status(201).json({
+        success:true,
+        subscription,
+    })
 })
 
 export default buySubscription;

@@ -5,6 +5,6 @@ import buySubscription from "../controllers/Payment.controller.js";
 const router = express.Router();
 
 //Buy Subscription
-router.route('/subscribe').post(isAuthenticated,buySubscription);
+router.route('/subscribe').get(isAuthenticated,buySubscription);
 
 export default router;
