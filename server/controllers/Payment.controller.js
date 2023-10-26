@@ -24,7 +24,7 @@ const buySubscription = catchAsynError(async (req,resp,next)=>{
 
     resp.status(201).json({
         success:true,
-        subscription,
+        subscriptionId:subscription.id,
     })
 })
 
