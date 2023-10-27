@@ -28,4 +28,33 @@ const buySubscription = catchAsynError(async (req,resp,next)=>{
     })
 })
 
-export default buySubscription;
+
+const paymentVerification = catchAsynError(async (req,resp,next)=>{
+    const user = await User.findById(req.user._id);
+
+    if(user.role==="admin")
+      return next(new ErrorHandler("Admin Can't buy Subscription",400));
+
+    const plan_id= process.env.PLAIN_ID;
+
+    const subscription= await instance.subscriptions.create({
+        plan_id: plan_id,
+        customer_notify: 1,
+        total_count: 12,
+    })
+
+    user.subscription.id= subscription.id;
+    user.subscription.status= subscription.status;
+
+    await user.save();
+
+    resp.status(201).json({
+        success:true,
+        subscriptionId:subscription.id,
+    })
+})
+
+export {
+    buySubscription,
+    paymentVerification
+} 
