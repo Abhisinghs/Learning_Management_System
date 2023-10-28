@@ -2,50 +2,65 @@ import catchAsynError from "../middlewares/catchAsynError.js";
 import User from "../models/User.modal.js";
 import { instance } from "../server.js";
 import ErrorHandler from "../utils/errorHandler.js";
+import crypto from "crypto";
 
-const buySubscription = catchAsynError(async (req,resp,next)=>{
-    const user = await User.findById(req.user._id);
+const buySubscription = catchAsynError(async (req, resp, next) => {
+  const user = await User.findById(req.user._id);
 
-    if(user.role==="admin")
-      return next(new ErrorHandler("Admin Can't buy Subscription",400));
+  if (user.role === "admin")
+    return next(new ErrorHandler("Admin Can't buy Subscription", 400));
 
-    const plan_id= process.env.PLAIN_ID;
+  const plan_id = process.env.PLAIN_ID;
 
-    const subscription= await instance.subscriptions.create({
-        plan_id: plan_id,
-        customer_notify: 1,
-        total_count: 12,
-    })
+  const subscription = await instance.subscriptions.create({
+    plan_id: plan_id,
+    customer_notify: 1,
+    total_count: 12,
+  });
 
-    user.subscription.id= subscription.id;
-    user.subscription.status= subscription.status;
+  user.subscription.id = subscription.id;
+  user.subscription.status = subscription.status;
 
-    await user.save();
+  await user.save();
 
-    resp.status(201).json({
-        success:true,
-        subscriptionId:subscription.id,
-    })
-})
+  resp.status(201).json({
+    success: true,
+    subscriptionId: subscription.id,
+  });
+});
 
+const paymentVerification = catchAsynError(async (req, resp, next) => {
+  const { razorpay_signature, razorpay_payment_id, razorpay_subscription_id } =
+    req.body;
 
-const paymentVerification = catchAsynError(async (req,resp,next)=>{
+  const user = await User.findById(req.user._id);
 
-    const {razorpay_signature,razorpay_payment_id,razorpay_subscription_id}= req.body;
+  const subscription_id = user.subscription.id;
 
-    const user = await User.findById(req.user._id);
+  const generated_signature = crypto
+    .createHmac("sha256", process.env.RAZORPAY_API_SECRET)
+    .update(razorpay_payment_id + "|" + subscription_id, "utf-8")
+    .digest("hex");
 
-    const subscription_id= user.subscription.id;
+  const isAuthentic = generated_signature === razorpay_signature;
 
+  if (!isAuthentic)
+    return resp.redirect(`${process.env.FRONTEND_URL}/paymentfailed`);
 
+  //database comes here
+  await Payment.create({
+    razorpay_payment_id,
+    razorpay_signature,
+    razorpay_subscription_id,
+  });
 
-    resp.status(201).json({
-        success:true,
-        subscriptionId:subscription.id,
-    })
-})
+  user.subscription.status = "active";
 
-export {
-    buySubscription,
-    paymentVerification
-} 
+  await user.save();
+
+  resp.redirect(
+    `${process.env.FRONTEND_URL}/paymentsuccess?reference = ${razorpay_payment_id}`
+    );
+});
+
+export { buySubscription, paymentVerification };
