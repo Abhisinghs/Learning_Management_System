@@ -1,4 +1,5 @@
 import catchAsynError from "../middlewares/catchAsynError.js";
+import Payment from "../models/Payment.modal.js";
 import User from "../models/User.modal.js";
 import { instance } from "../server.js";
 import ErrorHandler from "../utils/errorHandler.js";
@@ -63,4 +64,11 @@ const paymentVerification = catchAsynError(async (req, resp, next) => {
     );
 });
 
-export { buySubscription, paymentVerification };
+const getRazorpayKey = catchAsynError(async(req,resp,next)=>{
+    resp.status(200).json({
+        success:true,
+        key:process.env.RAZORPAY_API_KEY,
+    })
+})
+
+export { buySubscription, paymentVerification,getRazorpayKey };
