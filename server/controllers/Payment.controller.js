@@ -5,9 +5,14 @@ import { instance } from "../server.js";
 import ErrorHandler from "../utils/errorHandler.js";
 import crypto from "crypto";
 
+
+//logic for buy subscription 
 const buySubscription = catchAsynError(async (req, resp, next) => {
+
+  //find user in database
   const user = await User.findById(req.user._id);
 
+  //role admin no need to buy subscription
   if (user.role === "admin")
     return next(new ErrorHandler("Admin Can't buy Subscription", 400));
 
@@ -22,6 +27,7 @@ const buySubscription = catchAsynError(async (req, resp, next) => {
   user.subscription.id = subscription.id;
   user.subscription.status = subscription.status;
 
+  //save detail in database
   await user.save();
 
   resp.status(201).json({
@@ -30,6 +36,8 @@ const buySubscription = catchAsynError(async (req, resp, next) => {
   });
 });
 
+
+//logic for payment verification
 const paymentVerification = catchAsynError(async (req, resp, next) => {
   const { razorpay_signature, razorpay_payment_id, razorpay_subscription_id } =
     req.body;
@@ -57,6 +65,7 @@ const paymentVerification = catchAsynError(async (req, resp, next) => {
 
   user.subscription.status = "active";
 
+  //save in database
   await user.save();
 
   resp.redirect(
