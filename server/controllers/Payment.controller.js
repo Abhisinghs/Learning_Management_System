@@ -5,10 +5,8 @@ import { instance } from "../server.js";
 import ErrorHandler from "../utils/errorHandler.js";
 import crypto from "crypto";
 
-
-//logic for buy subscription 
+//logic for buy subscription
 const buySubscription = catchAsynError(async (req, resp, next) => {
-
   //find user in database
   const user = await User.findById(req.user._id);
 
@@ -35,7 +33,6 @@ const buySubscription = catchAsynError(async (req, resp, next) => {
     subscriptionId: subscription.id,
   });
 });
-
 
 //logic for payment verification
 const paymentVerification = catchAsynError(async (req, resp, next) => {
@@ -70,14 +67,48 @@ const paymentVerification = catchAsynError(async (req, resp, next) => {
 
   resp.redirect(
     `${process.env.FRONTEND_URL}/paymentsuccess?reference = ${razorpay_payment_id}`
-    );
+  );
 });
 
-const getRazorpayKey = catchAsynError(async(req,resp,next)=>{
-    resp.status(200).json({
-        success:true,
-        key:process.env.RAZORPAY_API_KEY,
-    })
-})
+const getRazorpayKey = catchAsynError(async (req, resp, next) => {
+  resp.status(200).json({
+    success: true,
+    key: process.env.RAZORPAY_API_KEY,
+  });
+});
+const cancelSubscription = catchAsynError(async (req, resp, next) => {
 
-export { buySubscription, paymentVerification,getRazorpayKey };
+  const user= await User.findById(req.user._id);
+
+  const subscriptionId= user.subscription.id;
+  let refund= false;
+
+  await instance.subscription.cancel(subscriptionId);
+
+  const payment = await Payment.findOne({
+    razorpay_subscription_id:subscriptionId,
+  })
+
+  const gap = Date.now()-payment.createdAt;
+
+  const refundTime= process.env.REFUND_DAYS*24*60*60*1000;
+
+  if(refundTime>gap){
+    await instance.payments.refund(payment.razorpay_payment_id);
+    refund = true;
+  }
+
+  await payment.remove();
+  user.subscription.id= undefined;
+  user.subscription.status= undefined;
+  user.save();
+  
+  resp.status(200).json({
+    success: true,
+    message:
+    refund?"Subscription Cancelled, You will receive full refund within 7 days."
+    :"Subscription Cancelled, Now refund initiated as subscription was cancelled after 7 days."
+  });
+});
+
+export { buySubscription, paymentVerification, getRazorpayKey,cancelSubscription };
