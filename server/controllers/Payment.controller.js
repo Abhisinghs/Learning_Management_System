@@ -76,6 +76,8 @@ const getRazorpayKey = catchAsynError(async (req, resp, next) => {
     key: process.env.RAZORPAY_API_KEY,
   });
 });
+
+
 const cancelSubscription = catchAsynError(async (req, resp, next) => {
 
   const user= await User.findById(req.user._id);
@@ -94,7 +96,7 @@ const cancelSubscription = catchAsynError(async (req, resp, next) => {
   const refundTime= process.env.REFUND_DAYS*24*60*60*1000;
 
   if(refundTime>gap){
-    await instance.payments.refund(payment.razorpay_payment_id);
+   // await instance.payments.refund(payment.razorpay_payment_id);
     refund = true;
   }
 
