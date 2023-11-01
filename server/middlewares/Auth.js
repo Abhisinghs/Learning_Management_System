@@ -15,6 +15,17 @@ const isAuthenticated = catchAsynError(async (req, resp, next) => {
   next();
 });
 
+const authorizedSubscribers = (req, resp, next) => {
+  if (  req.user.subscription.status !=='active'  && req.user.role !== "admin")
+    return next(
+      new ErrorHandler(
+        `Only Subscribers can access this resources`,
+        403
+      )
+    );
+    next();
+};
+
 const authorizedAdmin = (req, resp, next) => {
   if (req.user.role !== "admin")
     return next(
@@ -26,4 +37,4 @@ const authorizedAdmin = (req, resp, next) => {
     next();
 };
 
-export {isAuthenticated,authorizedAdmin}
+export {isAuthenticated,authorizedAdmin,authorizedSubscribers}
