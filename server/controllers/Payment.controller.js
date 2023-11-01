@@ -85,7 +85,7 @@ const cancelSubscription = catchAsynError(async (req, resp, next) => {
   const subscriptionId= user.subscription.id;
   let refund= false;
 
-  await instance.subscription.cancel(subscriptionId);
+  await instance.subscriptions.cancel(subscriptionId);
 
   const payment = await Payment.findOne({
     razorpay_subscription_id:subscriptionId,
