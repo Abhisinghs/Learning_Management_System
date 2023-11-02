@@ -1,6 +1,6 @@
 import express from "express";
 import { isAuthenticated } from "../middlewares/Auth.js";
-import {buySubscription, getRazorpayKey, paymentVerification } from "../controllers/Payment.controller.js";
+import {buySubscription, cancelSubscription, getRazorpayKey, paymentVerification } from "../controllers/Payment.controller.js";
 
 const router = express.Router();
 
@@ -14,6 +14,6 @@ router.route('/paymentverification').post(isAuthenticated,paymentVerification);
 router.route('/razorpaykey').get(getRazorpayKey);
 
 //Cancel Subscription 
-router.route('/subscribe/cancel').delete(isAuthenticated,);
+router.route('/subscribe/cancel').delete(isAuthenticated,cancelSubscription);
 
 export default router;
