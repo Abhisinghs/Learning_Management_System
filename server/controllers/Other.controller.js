@@ -1,9 +1,14 @@
 import catchAsynError from "../middlewares/catchAsynError.js";
+import ErrorHandler from "../utils/errorHandler.js";
 import sendEmail from "../utils/sendEmail.js";
 
 const contact= catchAsynError(async(req,resp,next)=>{
 
     const {name,email,message}=req.body;
+
+    if(!name || !email || !message) 
+        return next(new ErrorHandler("All Fields are madetory",401));
+
     const to=process.env.MY_MAIL;
 
     const subject="Contact From LearnHub";
@@ -19,6 +24,10 @@ const contact= catchAsynError(async(req,resp,next)=>{
 
 const courseRequest= catchAsynError(async(req,resp,next)=>{
     const {name,email,course}=req.body;
+
+    if(!name || !email || !course) 
+        return next(new ErrorHandler("All Fields are madetory",401));
+
     const to=process.env.MY_MAIL;
 
     const subject="Request for a course on LearnHub";
