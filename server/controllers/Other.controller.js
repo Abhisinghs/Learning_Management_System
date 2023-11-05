@@ -1,4 +1,5 @@
 import catchAsynError from "../middlewares/catchAsynError.js";
+import stats from "../models/Stats.modal.js";
 import ErrorHandler from "../utils/errorHandler.js";
 import sendEmail from "../utils/sendEmail.js";
 
@@ -39,9 +40,19 @@ const courseRequest= catchAsynError(async(req,resp,next)=>{
         success:true,
         message:"Your Request has been sent."
     })
+});
+
+const getDashboardStats = catchAsynError(async(req,resp,next)=>{
+    
+    const stats=await stats.find({}).sort({createdAt:"desc"}).limit(12);
+
+    resp.status(200).json({
+
+    })
 })
 
 export {
     contact,
-    courseRequest
+    courseRequest,
+    getDashboardStats,
 }
