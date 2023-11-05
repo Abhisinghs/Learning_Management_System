@@ -94,12 +94,12 @@ const getDashboardStats = catchAsynError(async(req,resp,next)=>{
         usersCount,
         subscriptionsCount,
         viewsCount,
-        usersProfit,
-        subscriptionsProfit,
-        viewsProfit,
         usersPercentage,
         subscriptionsPercentage,
-        viewsPercentage
+        viewsPercentage,
+        usersProfit,
+        subscriptionsProfit,
+        viewsProfit
     })
 })
 
