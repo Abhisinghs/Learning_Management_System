@@ -7,6 +7,7 @@ import crypto from "crypto";
 import Course from "../models/Course.modal.js";
 import cloudinary from "cloudinary";
 import getDataUri from "../utils/dataUri.js";
+import stats from "../models/Stats.modal.js";
 
 //logic for register user
 const register = catchAsynError(async (req, resp, next) => {
@@ -301,6 +302,17 @@ const deleteMyProfile = catchAsynError(async (req, resp, next) => {
       success: true,
       message: "User Deleted Successfully",
     });
+});
+
+//time to time check
+User.watch().on("change",async()=>{
+  const Stats = await stats.find({}).sort({createdAt:"desc"}).limit(1);
+
+  const subscription= await User.find({"subscription.status":"active"});
+
+  stats[0].users=await User.countDocuments();
+  stats[0].subscription=subscription.length;
+  stats[0].createdAt= new Date(Date.now());
 });
 
 export {
