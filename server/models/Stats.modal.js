@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const paymentSchema = new mongoose.Schema({
+const statsSchema = new mongoose.Schema({
     
     users:{
         type:Number,
