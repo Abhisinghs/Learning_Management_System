@@ -164,6 +164,8 @@ const forgetPassword = catchAsynError(async (req, res, next) => {
   });
 });
 
+
+//logic for reset password
 const resetPassword = catchAsynError(async (req, res, next) => {
   const { token } = req.params;
   const resetPasswordToken = crypto
@@ -195,6 +197,8 @@ const resetPassword = catchAsynError(async (req, res, next) => {
   });
 });
 
+
+//add to playlist logic
 const addToPlaylist = catchAsynError(async (req, resp, next) => {
   const user = await User.findById(req.user._id);
   const course = await Course.findById(req.body.id);
@@ -220,6 +224,8 @@ const addToPlaylist = catchAsynError(async (req, resp, next) => {
   });
 });
 
+
+//remove from playlist logic 
 const removeFromPlaylist = catchAsynError(async (req, resp, next) => {
   const user = await User.findById(req.user._id);
   const course = await Course.findById(req.query.id);
@@ -248,6 +254,8 @@ const getAllUsers = catchAsynError(async (req, resp, next) => {
   });
 });
 
+
+//Update user role 
 const updateUserRole = catchAsynError(async (req, resp, next) => {
   const user = await User.findById(req.params.id);
 
