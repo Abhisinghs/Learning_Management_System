@@ -32,11 +32,6 @@ NodeCron.schedule("0 0 0 1 * *",async()=>{
    }
 })
 
-const temp = async()=>{
-    await stats.create({});
-}
-temp();
-
 //listen server 
 app.listen(PORT,()=>{
     
