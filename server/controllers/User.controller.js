@@ -322,7 +322,7 @@ User.watch().on("change",async()=>{
   Stats[0].subscriptions=subscription.length;
   Stats[0].createdAt= new Date(Date.now());
 
-  Stats.save();
+   await Stats[0].save();
 });
 
 export {

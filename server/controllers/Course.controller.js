@@ -178,7 +178,7 @@ Course.watch().on("change",async()=>{
 
   const courses = await Course.find({});
 
-  totalViews= 0;
+  let totalViews= 0;
 
   for (let i = 0; i < courses.length; i++) {
     totalViews+=courses[i].views;
