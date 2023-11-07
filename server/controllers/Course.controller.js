@@ -1,8 +1,8 @@
 //import course modal
 import catchAsynError from "../middlewares/catchAsynError.js";
 import Course from "../models/Course.modal.js";
+import stats from "../models/Stats.modal.js";
 import getDataUri from "../utils/dataUri.js";
-import getDatauri from "../utils/dataUri.js";
 import ErrorHandler from "../utils/errorHandler.js";
 import cloudinary from "cloudinary";
 
@@ -172,5 +172,23 @@ const deleteLecture = catchAsynError(async (req,resp,next) => {
     message:"Course Lecture deleted successfully",
   })
 });
+
+Course.watch().on("change",async()=>{
+  const Stats = await stats.find({}).sort({createdAt:"desc"}).limit(1);
+
+  const courses = await Course.find({});
+
+  totalViews= 0;
+
+  for (let i = 0; i < courses.length; i++) {
+    totalViews+=courses[i].views;
+    
+  }
+
+  Stats[0].views = totalViews;
+  Stats[0].createdAt= new Date(Date.now());
+
+  await Stats[0].save();
+})
 
 export { getAllCourses, createCourse, getCourseLectures, addLecture,deleteCourse,deleteLecture };
