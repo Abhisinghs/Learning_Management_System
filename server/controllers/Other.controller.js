@@ -42,6 +42,8 @@ const courseRequest= catchAsynError(async(req,resp,next)=>{
     })
 });
 
+
+//logic for Statics for Dashboard
 const getDashboardStats = catchAsynError(async(req,resp,next)=>{
     
     const Stats = await stats.find({}).sort({createdAt:"desc"}).limit(12);
@@ -62,6 +64,7 @@ const getDashboardStats = catchAsynError(async(req,resp,next)=>{
         })
     }
 
+    //store count in varibles 
     const usersCount = statsData[11].users;
     const subscriptionsCount = statsData[11].subscriptions;
     const viewsCount = statsData[11].views;
