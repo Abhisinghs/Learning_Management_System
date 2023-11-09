@@ -73,6 +73,7 @@ const getDashboardStats = catchAsynError(async(req,resp,next)=>{
 
     let usersPercentage = 0,viewsPercentage=0,subscriptionsPercentage=0;
 
+    //store the information of user,subscription and views 
     if(statsData[10].users==0)  usersPercentage = usersCount*100;
     if(statsData[10].views==0)  viewsPercentage = viewsCount*100;
     if(statsData[10].subscriptions==0)  subscriptionsPercentage = subscriptionsCount*100;
