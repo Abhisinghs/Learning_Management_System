@@ -3,6 +3,8 @@ import catchAsynError from "./catchAsynError.js";
 import ErrorHandler from "../utils/errorHandler.js";
 import User from "../models/User.modal.js";
 
+
+//Authentication logic 
 const isAuthenticated = catchAsynError(async (req, resp, next) => {
   const { token } = req.cookies;
 
@@ -15,6 +17,8 @@ const isAuthenticated = catchAsynError(async (req, resp, next) => {
   next();
 });
 
+
+//authorisation logic 
 const authorizedSubscribers = (req, resp, next) => {
   if (  req.user.subscription.status !=='active'  && req.user.role !== "admin")
     return next(
@@ -26,6 +30,7 @@ const authorizedSubscribers = (req, resp, next) => {
     next();
 };
 
+//authorisation logic for user and admin role
 const authorizedAdmin = (req, resp, next) => {
   if (req.user.role !== "admin")
     return next(
@@ -37,4 +42,6 @@ const authorizedAdmin = (req, resp, next) => {
     next();
 };
 
+
+//export all the module
 export {isAuthenticated,authorizedAdmin,authorizedSubscribers}
