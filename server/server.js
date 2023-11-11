@@ -32,6 +32,11 @@ NodeCron.schedule("0 0 0 1 * *",async()=>{
    }
 })
 
+app.get('/',(req,resp)=>{
+    resp.send(`<h1>Working is Fine</h1>`)
+})
+
+
 //listen server 
 app.listen(PORT,()=>{
     
