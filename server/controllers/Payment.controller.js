@@ -1,7 +1,7 @@
 import catchAsynError from "../middlewares/catchAsynError.js";
 import Payment from "../models/Payment.modal.js";
 import User from "../models/User.modal.js";
-import { instance } from "../server.js";
+import { instance } from "../index.js";
 import ErrorHandler from "../utils/errorHandler.js";
 import crypto from "crypto";
 
